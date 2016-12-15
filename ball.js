@@ -5,16 +5,15 @@ think about relation between this.xspeed and this.yspeed, maybe this.xspeed/this
 also can be solved if we release bouncing from left and right
 */
 function Ball() {
-  this.x = 200;
+  this.x = 300;
 
-  this.y = 200;
+  this.y = 560;
   
   this.rad = 20;
   
   this.xspeed = 5;
   
   this.yspeed = -5;
-  
   
   this. display = function () {
     fill(200, 200, 200);
@@ -27,7 +26,25 @@ function Ball() {
     this.x = this.x + this.xspeed;
     this.y = this.y + this.yspeed;
   }
-  
+
+  this.distroy = function() {
+    if(this.x >= breaks[i].x - breaks[i].length/2 && this.x <= breaks[i].x + breaks[i].length/2){
+      if(this.y <= breaks[i].y + ball.rad/2 + breaks[i].height/2 && this.y >= breaks[i].y - ball.rad/2 - breaks[i].height/2){
+      console.log('ONCE AGAIN');
+      this.yspeed *= -1;
+      breaks.splice(i,1);
+        t = t+50;
+      } 
+    }
+    else if(this.y >= breaks[i].y - breaks[i].height/2 && this.y <= breaks[i].y + breaks[i].height/2){
+      if(this.x <= breaks[i].x + ball.rad/2 + breaks[i].length/2 && this.x >= breaks[i].x - ball.rad/2 - breaks[i].length/2){
+        console.log('Is getting more interesting');
+        this.xspeed *= -1;
+        breaks.splice(i,1);
+        t = t+50;
+      }
+    }
+  }
   this.bounce = function () {
     if(this.x < this.rad/2 || this.x > width - this.rad/2){
       this.xspeed *= -1;
@@ -38,35 +55,23 @@ function Ball() {
     
   }
   
-  /*this.removing = function() {
-   if(this.x == 200){
-     remove();
-   
-   } 
-  }*/
-  
   this.changeDir = function(){
-
-
-    if(this.x >= (plate.x - plate.length/2) && this.x < plate.x){
-      if(this.y == plate.y - this.rad/2 - plate.height/2){
+    if(this.y >= plate.y - this.rad/2 - plate.height/2 ){
+      if(this.x >= (plate.x - plate.length/2) && this.x < plate.x){
+      
         this.yspeed = 5;
         this.yspeed *= -1;
         this.xspeed = 5;
         this.xspeed *= -5*abs((this.x - plate.x)/plate.length/2);
       }
       
-    }
-    else if((this.x <= plate.x + plate.length/2) && this.x >plate.x){
-      if(this.y == plate.y - this.rad/2 - plate.height/2){
+      else if((this.x <= plate.x + plate.length/2) && this.x >plate.x){
         this.yspeed = 5;
         this.yspeed *= -1;
         this.xspeed = -5;
         this.xspeed *= -5*((this.x - plate.x)/plate.length/2);
-      }
-    }  
-    else if(this.x == plate.x){
-      if(this.y == plate.y - this.rad/2 - plate.height/2){
+      }  
+      else if(this.x == plate.x){
         this.xspeed *= -1;
         this.yspeed *= -1;
       }
@@ -74,7 +79,7 @@ function Ball() {
      // console.log('ball.yspeed is ' + this.yspeed);
 
       //console.log('ball.xspeed is ' + this.xspeed);
-    if (this.x == plate.x - plate.length/2 - this.rad/2){
+    if (this.x >= plate.x - plate.length/2 - this.rad/2 && this.x < plate.x - plate.length/2){
       if(this.y < plate.y && this.y >= plate.y - plate.height/2 - this.rad/2){
         this.yspeed = 5;
         this.xspeed = 5;
@@ -99,7 +104,7 @@ function Ball() {
       }
     }
 
-    else if(this.x == plate.x + plate.length/2 + this.rad/2){
+    else if(this.x <= plate.x + plate.length/2 + this.rad/2 && this.x > plate.x + plate.length/2){
       if(this.y < plate.y && this.y >= plate.y - plate.height/2 - this.rad/2){
         this.yspeed = 5;
         this.xspeed = -5;
@@ -123,10 +128,12 @@ function Ball() {
         console.log('do not know what to write');
       }
     }
+  else{
+    return false;
+  }
     if(this.y > plate.y + plate.height - this.rad/2){
       console.log('Game over');
       
     }
-    
   }
 }
